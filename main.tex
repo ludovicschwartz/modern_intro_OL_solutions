@@ -1,0 +1,58 @@
+\documentclass[a4paper, 11pt]{report}
+
+\usepackage{preamble}
+\usepackage{ifthen}
+\usepackage{multicol}
+	\setlength{\columnseprule}{0.1pt}
+
+\usepackage{setspace}
+
+\usepackage{pgffor}
+\usepackage{subfiles}
+\setlength {\marginparwidth }{2cm}
+\input{macros}
+
+\newcounter{exercise}[chapter]
+\newenvironment{exercise}[2][]{\refstepcounter{exercise}\ifthenelse{\equal{#1}{}}{\noindent\vspace{0.5cm}{\textbf{Exercise \thechapter.\theexercise} \textsc{#2}\\}\addcontentsline{toc}{section}{Exercise \theexercise. #2}}{} }{}
+\providecommand{\soldone}{}
+\newenvironment{solution}[1][]{\renewcommand{\soldone}{\equal{#1}{}}\ifthenelse{\soldone}{\par\vspace{0.4cm}\noindent{\bfseries Solution : }}{}}{\ifthenelse{\soldone}{\hfill $\whitesquaregamma$ \par\vspace{0.4cm}}{}}
+
+\newcommand\TwoDigits[1]{%
+   \ifnum#1<10 0#1\else #1\fi
+}
+
+\newcommand*{\MaxNumOfChapters}{40}
+\providecommand{\main}{.}
+\title{
+\begin{Huge}
+Modern intro to Online Learning -- Exercise Solutions
+\end{Huge}
+}
+\author{Ludovic Schwartz}
+\date{}
+
+\setlength{\parskip}{.3em}
+
+\begin{document}
+
+\maketitle
+\clearpage
+
+\begin{small}
+\tableofcontents
+\end{small}
+
+\foreach \c in {1,2,...,\MaxNumOfChapters}{%
+    \edef\FileName{chapter_\TwoDigits{\c}/main}
+    \IfFileExists{\FileName} {%
+        \subfile{\FileName}%
+    }{%
+         % files does not exist, so nothing to do
+    }%
+}%
+
+\clearpage
+\nocite{*}
+% \bibliography{ref}
+
+\end{document}

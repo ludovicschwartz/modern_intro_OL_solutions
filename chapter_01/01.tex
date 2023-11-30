@@ -1,0 +1,42 @@
+%! TEX root = ./main.tex
+\begin{exercise}[]{}
+	Extend the previous algorithm and analysis to the case when the adversary selects a vector $ y_t \in  \mathbb{R}^d $ such that $ \norm{y}_2 \leq 1$, the algorithm guesses a vector $ x_t \in \mathbb{R}^d $, and the loss function is $ \norm{x_t-y_t}_2^2 $. Show an upper bound to the regret logarithmic in T and that does not depend on d. Among the other things, you will probably need the Cauchy-Schwarz inequality : $ \siprod{x}{y} \leq  \norm{x}_2 \norm{y}_2 $.
+\end{exercise}
+
+\begin{solution}
+	The natural extension of the previous algorithm is to pick the $ x_t $ which minimizes the cumulated loss up to time $ t-1 $. We also define $ x_t^{*} $ the optimal comparator at times t :
+\begin{equation*}
+	x_t = x_{t-1}^{*} = \argmin_{x\in \mathbb{R}}\sum_{s=1}^{t-1} \norm{x-y_t}^2
+\end{equation*}
+We can once again explicitely compute the value of $ x_t $. Indeed, if we define $ F_t(x) := \sum_{s=1}^{t} \norm{x-y_t}^2 $, $ F_t $ is a strictly convex function and reaches its minimum where its gradient vanishes. A simple computation then gives $ \nabla F_t(x) = 0 \leftrightarrow \sum_{s=1}^{t}2(x-y_s) = 0 \leftrightarrow x = \frac{1}{t}\sum_{s=1}^{t}y_s $
+In particular, we have again $ x_t = \frac{1}{t-1}\sum_{s=1}^{t-1}y_s $ and we can notice that $ \norm{x_t} \leq 1 $ at all time.
+
+Now, by lemma 1.2 with the loss $ \ell_t(x) = \norm{x-y_t}^2 $, we have :
+\begin{equation*}
+	\forall T, \sum_{t=1}^{T}\norm{x_T^{*}-y_t}^2 \geq \sum_{s=1}^{T}\norm{x_t^{*}-y_t}^2
+\end{equation*}
+We can now complete the proof :
+\begin{align*}
+	R_T &= \sum_{t=1}^{T} \norm{x_t-y_t}^2 - \min_{x\in \mathbb{R}}\sum_{t=1}^{T} \norm{x-y_t}^2 \\
+	    &= \sum_{t=1}^{T} \norm{x_{t-1}^{*}-y_t}^2 - \sum_{t=1}^{T} \norm{x_T-y_t}^2 \\
+	    &\leq \sum_{t=1}^{T} \norm{x_{t-1}^{*}-y_t}^2 - \sum_{t=1}^{T} \norm{x_{t}^{*}-y_t}^2\\
+	    &= \sum_{t=1}^{T} \siprod{x_{t-1}^{*}+x_t^{*}-2y_t}{x_{t-1}^{*}-x_t^{*}}\\
+	    &\leftstackrel{\mathrm{{(C.S)}}}{\leq} \sum_{t=1}^{T}\norm{x_{t-1}^{*}+x_t^{*}-2y_t}\cdot \norm{x_{t-1}^{*}-x_t^{*}}\\
+	    &\leq \sum_{t=1}^{T}4 \norm{x_{t-1}^{*}-x_t^{*}}
+\end{align*}
+Where the first inequality uses lemma 1.2, the second one uses Cauchy-Schwarz and the third uses that $ \forall t,\,\norm{x_t^{*}} \leq 1 \quad \text{and}\quad  \norm{y_t}\leq 1 $. Now we notice that 
+\begin{align*}
+	\norm{x_{t-1}^{*}-x_t} &= \norm{\frac{1}{t-1}\sum_{s=1}^{t-1}y_s - \frac{1}{t}\sum_{s=1}^{t}y_s}\\
+			       &= \norm{\frac{1}{t(t-1)}\sum_{s=1}^{t-1}y_s+\frac{1}{t}y_t}\\
+			       &\leq \frac{1}{t(t-1)}\sum_{s=1}^{t-1}\norm{y_s} + \frac{1}{t}\norm{y_t}\\
+			       &\leq \frac{2}{t}
+\end{align*}
+Now we plug everything together :
+\begin{equation*}
+	R_T \leq 4\cdot \sum_{t=1}^{T}\norm{x_{t-1}^{*}-x_t^{*}} \leq 8\cdot \sum_{t=1}^{T}\frac{1}{t} \leq 8+8\log T
+\end{equation*}
+
+
+
+
+\end{solution}
