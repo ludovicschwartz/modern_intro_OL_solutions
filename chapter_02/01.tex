@@ -1,0 +1,16 @@
+%! TEX root = ./main.tex
+\begin{exercise}[]{}
+	Prove that $ \sum_{t=1}^{T}\frac{1}{\sqrt{t}} \leq 2\sqrt{T} -1 $
+\end{exercise}
+
+\begin{solution}[]
+	We have :
+\begin{align*}
+	\sum_{t=1}^{T}\frac{1}{\sqrt{t}} &= 1 +\sum_{t=2}^{T}\frac{1}{\sqrt{t}}\\
+					 &= 1 + \sum_{t=2}^{T} \int_{t-1}^{t} \frac{1}{\sqrt{t}}du \\
+					 &\leq  1 + \sum_{t=2}^{T} \int_{t-1}^{t} \frac{1}{\sqrt{u}}du \\
+					 &\leq 1+\int_{1}^{T} \frac{1}{\sqrt{u}}du \\
+					 &= 1 + 2\sqrt{T} - 2 = 2\sqrt{T} - 1
+\end{align*}
+
+\end{solution}

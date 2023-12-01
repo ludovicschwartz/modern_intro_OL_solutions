@@ -1,0 +1,22 @@
+%! TEX root = ./main.tex
+\begin{exercise}[]{}
+	Using the inequality in the previous exercise, prove that a learning rate $ \propto \frac{1}{\sqrt{t}} $ gives rise to a regret only a constant multiplicative factor worse than the one in (2.1)($ R_T \leq DL \sqrt{T} $).
+\end{exercise}
+
+\begin{solution}[]
+	We start at the result of theorem 2.13 :
+\begin{equation*}
+	R_T \leq \frac{D^2}{2\eta_T} + \sum_{t=1}^{T}\frac{\eta_t}{2}\norm{g_t}^2
+\end{equation*}
+Then we bound for any t, $ \norm{g_t}^2 \leq L^2 $ and set $ \eta_t = \alpha \frac{1}{\sqrt{t}} $ with $ \alpha >0 $ to be determined later. We have 
+\begin{align*}
+	R_T &\leq \frac{D^2 \sqrt{T}}{2\alpha} + \sum_{t=1}^{T}\frac{\alpha}{2\sqrt{t}} L^2  \\
+	    &= \frac{D^2 \sqrt{T}}{2\alpha} + \frac{\alpha L^2}{2}\sum_{t=1}^{T}\frac{1}{\sqrt{t}} \\
+	    &\leq \frac{D^2 \sqrt{T}}{2\alpha} + \alpha L^2 \sqrt{T} \\
+	    &=\sqrt{T}\left( \frac{D^2}{2\alpha} + \alpha L^2 \right) \\
+	    &=DL \sqrt{2T}
+\end{align*}
+Where the third line uses the result of the previous exercise and the last lines uses the choice $ \alpha = \sqrt{\frac{D^2}{2L^2}} $. We remark that we are only a factor $ \sqrt{2} $ worse than the bound obtained with a fixed $ \eta $.
+
+
+\end{solution}
