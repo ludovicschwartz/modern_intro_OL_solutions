@@ -1,6 +1,42 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Calculate the subdifferential set of the $ \epsilon $-insensitive loss : \\$ f(x) = \max(|x-y|-\epsilon, 0) $
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We start by a drawing of the function :
+\begin{figure}[h!]
+	\begin{tikzpicture}
+	  \begin{axis}[
+	    domain=-1:3,
+	    samples=100,
+	    axis lines=middle,
+	    xlabel={$x$},
+	    ylabel={$f(x)$},
+	    ymax=1.5,  % Adjust the y-axis range as needed
+	    ymin=-0.5,
+	    xticklabels={}, % Hide x-axis tick labels
+	    yticklabels={}, % Hide y-axis tick labels
+	    ]
+	    \addplot[blue,thick] {max(abs(1-x)-1/2, 0)};
+	    % Label at (1, 0)
+	    \node[anchor=north] at (axis cs:1,0) {$y$};
+	    % Label at (3/2, 0)
+	    \node[anchor=north] at (axis cs:3/2,0) {$y + \epsilon$};
+	  \end{axis}
+	\end{tikzpicture}
+\end{figure}
+
+Then the subdifferential is :
+\begin{equation*}
+	\partial f(x) =
+\begin{cases}
+	\{ 0 \} &\text{ if } x \in ]y-\epsilon, y+\epsilon[ \\
+	\{ -1 \} &\text{ if } x \in ]-\infty, y-\epsilon[ \\
+	\{ 1 \} &\text{ if } x \in ]y+\epsilon,\infty[ \\
+	[0,1] &\text{ if } x = y+\epsilon \\
+	[-1,1] &\text{ if } x = y-\epsilon
+\end{cases}
+\end{equation*}
+
 \end{solution}
