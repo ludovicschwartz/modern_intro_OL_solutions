@@ -1,6 +1,37 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Using the definition of subgradient, find the subdifferential set of $ f(x) = \norm{x}_2 = \sqrt{\sum_{i=1}^{d}x_i^2}$, $ x\in \mathbb{R}^d $
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We start by treating the case $ x \neq 0 $. Then f is actually differentiable in x and we have :
+\begin{equation*}
+	\frac{\partial f}{\partial x_i}(x) = \frac{x_i}{\sqrt{\sum_{i=1}^{d}x_i^2}} = \frac{x_i}{\norm{x}_2}
+\end{equation*}
+In that case, we simply have :
+\begin{equation*}
+	\partial f(x) = \{ \nabla f(x) \} = \left\{ \frac{x}{\norm{x}_2} \right\}
+\end{equation*}
+For the case $ x=0 $ we use the definition of a subgradient, $ g $ is a subgradient of f at the point $ x=0 $ if and only if
+\begin{equation*}
+	\forall y \in \mathbb{R}^d,\, \norm{y}_2 \geq \norm{0}_2 + \siprod{g}{y} = \siprod{g}{y}
+\end{equation*}
+By Cauchy Schwarz Inequality, we have :
+\begin{equation*}
+	\forall g,y \in \mathbb{R}^d,\, \siprod{g}{y} \leq \norm{g}_2\cdot \norm{y}_2
+\end{equation*}
+So any $ g $ of norm smaller than 1 will be a subgradient of f at $ x=0 $. Conversely, if $ \norm{g}_2 > 1 $, then we have for $ y=g $, $ \siprod{g}{y} = \siprod{y}{y} = \norm{y}_2^2 > \norm{y}_2 $ and $ g $ will not be a subgradient of f at $ x=0 $.
+To conclude, we have that :
+\begin{align*}
+\partial f(x) =
+\begin{cases}
+	\{ \frac{x}{\norm{x}_2} \} &\text{ if } x \neq 0 \\
+	\{ g, \norm{g}_2 \leq 1 \} &\text{ if } x = 0
+\end{cases}
+\end{align*}
+
+
+
+
+
 \end{solution}
