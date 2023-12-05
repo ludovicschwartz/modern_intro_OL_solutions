@@ -1,6 +1,28 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Prove that the dual norm of $ \norm{\cdot }_p $ is $ \norm{\cdot }_q $, where $ \frac{1}{p} + \frac{1}{q} = 1 $ and $ p,q \geq 1 $
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	Let $ p,q \geq 1 $. By absolute homogeneity of the norms, it suffices to prove that $\forall y \in \mathbb{R}^d,\, \norm{y}_q = 1 \implies \norm{y}_p^{*} =1 $.
+
+Let $ y \in \mathbb{R}^d $ such that $ \norm{y}_q = 1 $, we have
+\begin{equation*}
+	\norm{y}_p^{*} = \max_{\norm{x}_p=1}\siprod{x}{y} \leq \norm{x}_p \norm{y}_q = 1
+\end{equation*}
+by Hölder's inequality with equality for some value of x. For completeness, we reprove the equality case of Hölder's inequality here. If $ 1<p<\infty $, we define $ x_i = sgn(y_i)\cdot |y_i|^{\frac{q}{p}} $(With the convention $ sgn(0) = 0 $)
+We have :
+\begin{equation*}
+	\norm{x}_p = \left( \sum_{i=1}^{d}|x_i|^p \right)^{\frac{1}{p}} = \left( \sum_{i=1}^{d}|y_i|^{p\cdot \frac{q}{p}} \right)^{\frac{1}{p}} = \norm{y}_q^{\frac{q}{p}}=1
+\end{equation*}
+And
+\begin{equation*}
+	\siprod{x}{y} = \sum_{i=1}^{d}x_i\cdot y_i = \sum_{i=1}^{d}|y_i|^{1+\frac{q}{p}} = \sum_{i=1}^{d}|y_i|^q = \norm{y}_q^q = 1
+\end{equation*}
+
+If $ p=1 $, let $ i^{*} \in \argmax_{i} |y_i| $ and $ x_i = sgn(y_{i^{*}})\mathbb{I}_{i=i^{*}} $. We have $ \norm{x}_1 = 1 $, and $ \siprod{x}{y} = |y_{i^{*}}| = \norm{y}_{\infty} =1 $
+
+If $ p=\infty $, let $ x_i = sgn(y_i) $(with the convention $ sgn(0) = 0 $). We have $ \norm{x}_{\infty} = 1 $ and $ \siprod{x}{y} = \sum_{i=1}^{d}x_i y_i = \sum_{i=1}^{d}|y_i| = \norm{y}_1 = 1$
+
+
 \end{solution}
