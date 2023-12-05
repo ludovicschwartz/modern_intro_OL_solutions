@@ -1,6 +1,29 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Consider Projected Online Subgradient Descent for the example 2.10 on the failure of Follow-the-Leader: Can we use it on that problem ? Would it guarantee sublinear regret ? How would the behaviour of the algorithm differ from FTL ?
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	The setting of Example 2.10 is the following : Let $ V = [-1,1] $ and consider the sequence of losses $ \ell_t(x) = z_tx + i_v(x) $, where 
+\begin{align*}
+	z_t = 
+\begin{cases}
+	-0.5 &\text{ if } t=1\\
+	(-1)^t &\text{ if } t>1
+\end{cases}
+\end{align*}
+We can apply Projected Online Subgradient Descent in that problem. In particular, since we only do prediction inside of $ V $, we can consider the loss function $ \ell_t(x) = z_t x $. We have :
+\begin{equation*}
+	\nabla \ell_t(x) = z_t
+\end{equation*}
+Now we can verify that :
+\begin{equation*}
+	\forall x \in V, \norm{\nabla  \ell_t(x)} \leq 1:=L
+\end{equation*}
+and that :
+\begin{equation*}
+	D := \sup_{x,y\in V}\norm{x-y} = 2 < \infty
+\end{equation*}
+Theorem 2.13 applies and we get a bound of order $ DL\sqrt{T}= 2\sqrt{T} $, that is to say, sublinear regret. The main difference with Follow the Leader is that Projected Online Subgradient Decent will pick points in the interior of V and do small updates on them while Follow the leader picks extremal points and moves a lot between each prediction.
+
 \end{solution}
