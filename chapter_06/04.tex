@@ -1,6 +1,16 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Let $ A\in \mathbb{R}^{d\times d} $a positive definite matrix. Define $ \norm{x}_A^2 = x^TAx $. Prove that $ \frac{1}{2}\norm{x-y}_A^2 $ is the Bregman divergence $ B_{\varphi}(x ;y) $ associated with $ \varphi(x) = \frac{1}{2}\norm{x}_A^2 $.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We have $ \varphi(x) = \frac{1}{2}x^TAx $ and $ \nabla \varphi(x) = Ax $. Hence :
+\begin{align*}
+	B_{\varphi(x ;y)} &= \varphi(x) - \varphi(y) - \siprod{\nabla \varphi(x)}{y-x} \\
+			  &= \frac{1}{2}x^TAx - \frac{1}{2}y^TAy - y^TA(x-y) \\
+			  &= \frac{1}{2}\left( x^TAx + y^TAy - 2y^TAx \right) \\
+			  &= \frac{1}{2}\left( (x-y)^TA(x-y) \right) \\
+			  &= \frac{1}{2}\norm{x-y}_A^2
+\end{align*}
+
 \end{solution}
