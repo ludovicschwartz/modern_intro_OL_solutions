@@ -1,6 +1,116 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Show that using online subgradient descent on a bounded domain V with the learning rates $ \eta_t = O(1/t) $ with Lipschitz, smooth, and strongly convex functions, you can get $ O(\log(1+L^{*})) $ bounds.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We assume that every loss function $ \ell_t $ is $ K $ Lipschitz, $ \mu $ strongly convex and $ M $ smooth. Without loss of generality, we assume that the minimum of each loss function on V is equal to $ 0 $.
+
+	We set the learning rate as $ \eta_t = \frac{1}{\sum_{s=1}^{t} \mu_s} = \frac{1}{\mu t}$. This learning rates verify :
+\begin{align*}
+	\frac{1}{2 \eta_1} - \frac{\mu}{2} &= 0 \\
+	\frac{1}{2 \eta_t} - \frac{\mu}{2} &= \frac{1}{2\eta_{t-1}}
+\end{align*}
+Then, using again Lemma 2.23, and summing from 1 to T, we get :
+\begin{align*}
+	\sum_{t=1}^{T}(\ell_t(x_t) - \ell_t(u)) &\leq \sum_{t=1}^{T}\left( \frac{1}{2\eta_t}\norm{x_t-u}_2^2 - \frac{1}{2\eta_t}\norm{x_{t+1}-u}_2^2 - \frac{\mu}{2}\norm{x_t-u}_2^2+\frac{\eta_t}{2}\norm{g_t}_2^2 \right) \\
+						&= -\frac{1}{2\eta_1}\norm{x_2-u}_2^2 + \sum_{t=2}^{T}\left( \frac{1}{2\eta_{t-1}}\norm{x_t-u}_2^2-\frac{1}{2\eta_t}\norm{x_{t+1}-u_2^2} \right) + \sum_{t=1}^{T}\frac{\eta_t}{2}\norm{g_t}_2^2 \\
+						&\leq \frac{1}{2}\sum_{t=1}^{T} \eta_t \norm{g_t}_2^2
+\end{align*}
+Now we can use the smoothness of the losses to bound the right hand side, using the fact that the losses are bounded away from 0, and theorem 4.22, we have :
+\begin{equation*}
+	\forall t \in {1,\ldots,T},\, \norm{g_t}_2^2 \leq 2M\ell_t(x_t)
+\end{equation*}
+Hence we get :
+\begin{equation*}
+	\sum_{t=1}^{T}(\ell_t(x_t)-\ell_t(u)) \leq\frac{M}{\mu} \sum_{t=1}^{T} \frac{\ell_t(x_t)}{t}
+\end{equation*}
+Now we introduce $ L_t = \sum_{s=1}^{t}\ell_s(x_s) $ and $ L_t(u) = \sum_{s=1}^{t}\ell_s(u) $, we want to bound $ L_t $, for that, we use the hypothesis that we made at the beginning that the minimum of each loss on V is equal to 0. Let $ x_t^{*} $ be such that $ \ell_t(x_t^{*}) = 0 $, we define the diameter of V as $ D := \max_{x,y\in V}\norm{x-y} < \infty $. We have :
+\begin{equation*}
+	|\ell_t(x_t)| = |\ell_t(x_t) - \ell_t(x_t^{*})| \leq K \norm{x_t - x_t^{*}} \leq DK
+\end{equation*}
+Where $ K $ is the Lipschitz constant of the losses. Then we have $ L_t \leq DKt $ so $ 1+L_t \leq  2DKt $ and $ \frac{1}{t} \leq 2DK \frac{1}{1 + L_t} $
+Putting it all together, we get :
+\begin{equation*}
+	\sum_{t=1}^{T}(\ell_t(x_t)-\ell_t(u)) \leq\frac{2DKM}{\mu} \sum_{t=1}^{T} \frac{\ell_t(x_t)}{1+L_t}
+\end{equation*}
+We can now apply Lemma 4.13 with $ f(x) = \frac{1}{x} $, $ a_0 =1 $, $ \forall 0<t\leq T, \, a_t = \ell_t(x_t) $ :
+\begin{align*}
+	&\sum_{t=1}^{T}\frac{\ell_t(x_t)}{1+L_t} \\
+	=& \sum_{t=1}^{T}a_t f \left( a_0+\sum_{i=1}^{t}a_i \right)\\
+	\leq& \int_{a_0}^{\sum_{t=0}^{T}a_t} f(x)dx\\
+	=& \int_{1}^{1+L_T} \frac{1}{x} dx = \log(1+L_T)
+\end{align*}
+We now have :
+\begin{equation*}
+	L_T - L_T(u) \leq \frac{2DKM}{\mu}\log(1+L_T) 
+\end{equation*}
+In order to replace $ L_t $ with $ L^{*} $, we will prove the following Lemma :
+\begin{lemma*}
+	Let $ 0 \leq x,c, \alpha $ such that $ x-c \leq \alpha\log(1+x) $, then :
+\begin{equation*}
+	x-c \leq \alpha^2 + \alpha\log(1+c) 
+\end{equation*}
+\end{lemma*}
+\begin{proof}
+	To prove this result, we will first prove a similar result with the square root and then compare the square root and the log.
+
+	We will prove that if $ 0\leq x,c,\alpha $ are such that $ x-c \leq \alpha \sqrt{x} $ and $ \alpha^2 \leq x-c $, then $ \sqrt{x} \leq \sqrt{c} + \alpha^{2} $
+
+	(In particular, this proves $x-c \leq \alpha\sqrt{x} \implies x-c \leq \alpha\sqrt{c} + \alpha^2 $).
+
+Since $ \alpha^2 \leq x-c $ we have :
+\begin{align*}
+	x-c + \alpha^2 &\leq 2\alpha\sqrt{x}\\
+	x+\alpha^2 - 2\alpha \sqrt{x} &\leq c \\
+	(\sqrt{x} - \alpha)^2 &\leq \sqrt{c} \\
+	\sqrt{x}- \alpha &\leq \sqrt{c} \\
+	\alpha \sqrt{x} &\leq \alpha^2 + \alpha \sqrt{c}
+\end{align*}
+Where we can take the square on the 4th line because everything is non-negative and the last line comes from multiplying by $ \alpha $.
+Now we compare the log and the square root. Let $ f(x) = \log(1+x) $, $ g(x)= \sqrt{x} $. We have that
+\begin{equation*}
+	\forall x > 0, f^{\prime}(x) - g^{\prime}(x) = \frac{2\sqrt{x}-(1+x)}{2\sqrt{x}(1+x)} = \frac{-(1-\sqrt{x})^2}{2\sqrt{x}(1+x)} \leq 0
+\end{equation*}
+And $ f(0) -g(0) = 0 \leq 0 $ so $\forall x \geq 0, f(x) \leq g(x) $.
+We can finally prove our Lemma, let $ x,c, \alpha $ be such that $ x-c \leq \alpha\log(1+x) $. Without loss of generality, we assume $ c\leq x $ and $ x-c \geq \alpha^2 $ otherwise, there is nothing to prove.
+We have
+\begin{equation*}
+	x-c \leq \alpha f(x) \leq \alpha g(x) = \alpha \sqrt{x}
+\end{equation*}
+So by the previous computation :
+\begin{equation*}
+	\alpha\sqrt{x} - \alpha\sqrt{c} \leq \alpha^2 
+\end{equation*}
+Now :
+\begin{align*}
+	\alpha(\log(1+x) - \log(1+c)) &= \alpha(f(x) - f(c))\\
+				      &= \alpha \int_{c}^{x} f^{\prime}(s)ds \\
+				      &\leq \alpha \int_{c}^{x} g^{\prime}(s)ds \\
+				      &= \alpha(\sqrt{x}- \sqrt{c}) \\
+				      &\leq \alpha^2
+\end{align*}
+In the end :
+\begin{equation*}
+	x-c \leq \alpha\log(1+x) \leq \alpha\log(1+c) + \alpha^2
+\end{equation*}
+\end{proof}
+Now we apply the previous Lemma with $ x= L_T $, $ c=L^{*} $, $ \alpha = \frac{2DKM}{\mu} $ :
+\begin{equation*}
+	L_T - L^{*} \leq \frac{2DKM}{\mu} \log(1+L^{*}) + \left( \frac{2DKM}{\mu} \right)^2
+\end{equation*}
+Finally :
+\begin{equation*}
+	\sum_{t=1}^{T}\ell_t(x_t)-\ell_t(u) = L_T - L_t(u) \leq L_t -L^{*} \leq  \frac{2DKM}{\mu}\log(1+L^{*}) + \left( \frac{2DKM}{\mu} \right)^2 = \mathcal{O}(\log(1+L^{*}))
+\end{equation*}
+
+
+
+
+
+
+
+
+
+
 \end{solution}
