@@ -1,6 +1,19 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Let $ f: \mathbb{R}^d \rightarrow (-\infty,+\infty] $ be even. Prove that $ f^{*} $ is even.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We have for $ y\in \mathbb{R}^d $:
+\begin{equation*}
+	f^{*}(y) = \sup_{x\in \mathbb{R}^d} \siprod{y}{x} - f(x)
+\end{equation*}
+and 
+\begin{align*}
+	f^{*}(-y) &= \sup_{x \in \mathbb{R}^d} \siprod{-y}{x} - f(x) \\
+		  &= \sup_{-x\in \mathbb{R}^d} \siprod{-y}{-x} - f(-x) \\
+		  &= \sup_{x\in \mathbb{R}^d} \siprod{y}{x} - f(x) \\
+		  &= f^{*}(y)
+\end{align*}
+Where we do the change of variable $ x \rightarrow -x $ in the second line and use the parity of $ f $ in the third line.
 \end{solution}
