@@ -1,6 +1,30 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Prove that the logistic loss $ \ell(x) = \log(1+\exp{(-y \siprod{z}{x})}) $, where $ \norm{z}_2 \leq  1 $ and $ y\in \{ -1,1 \} $ is $ \frac{1}{4}- $smooth w.r.t $ \norm{\cdot }_2 $.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We introducte the following functions :
+\begin{align*}
+f: \mathbb{R}& \longrightarrow \mathbb{R} \\
+t&\longmapsto \log(1+e^t)
+\end{align*}
+\begin{align*}
+g: \mathbb{R}^d& \longrightarrow \mathbb{R} \\
+x&\longmapsto -y \siprod{z}{x}
+\end{align*}
+We have that $ \ell = f\circ g $, and by the chain rule :
+\begin{equation*}
+	\nabla \ell(x) = f^{\prime}(g(x))\cdot \nabla g(x) = -f^{\prime}(g(x))\cdot yz 
+\end{equation*}
+Since $ \norm{yz}_2 \leq 1 $, $ g $ is 1-Lipschitz, and it is enough to verify that $ f^{\prime} $ is $ \frac{1}{4} $-Lipschitz to prove the claim of the exercise.We have :
+\begin{align*}
+	\forall t \in \mathbb{R},\, f^{\prime}(t) &= \frac{e^t}{1 +e^t} \\
+	f^{\prime\prime}(t) &= \frac{e^{t}(1+e^{t}) - e^{t}e^{t}}{(1+e^{t})^2} \\
+			    &= \frac{e^t}{(1+e^t)^2} \\
+			    &\leq \frac{e^t}{(2e^{\frac{t}{2}})^2} \\
+			    &= \frac{1}{4}
+\end{align*}
+Where the inequality comes from the AM-GM inequality between 1 and $ e^t $ giving us $ \frac{1 + e^t}{2} \geq \sqrt{e^t} = e^{\frac{t}{2}} $
+We have proven that $ f^{\prime} $ is $ \frac{1}{4} $-Lipschitz, hence $ \ell $ is $ \frac{1}{4} $-smooth.
 \end{solution}
