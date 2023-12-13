@@ -1,6 +1,31 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	In the proof of Online Mirror Descent, we have the terms :
+\begin{equation*}
+	-B_{\psi}(x_{t+1} ; x_t) + \siprod{\eta_tg_t}{x_t -x_{t+1}}
+\end{equation*}
+Prove that they can be lower bounded by $ B_{\psi}(x_t ; x_{t+1}) $
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	By the definition of the mirror descent algorithm, we have that :
+\begin{equation*}
+	x_{t+1} = \argmin_{x\in V}\siprod{\eta_tg_t}{x} + B_{\psi} (x ; x_t)
+\end{equation*}
+Now the first order optimality condition applied to the function $ g(x) = \siprod{\eta_tg_t}{x} + B_{\psi}(x ; x_t) $ gives us :
+\begin{align*}
+	\forall x \in V, \siprod{\nabla g(x_{t+1})}{x-x_{t+1}} &\geq 0 \\
+	\siprod{\eta_tg_t + \nabla \psi(x_{t+1}) -\nabla \psi(x_t)}{x-x_{t+1}} \geq  0
+\end{align*}
+In particular, for $ x=x_t $, we get :
+\begin{equation*}
+	0\leq \siprod{\eta_tg_t}{x_t - x_{t+1}} + \siprod{\nabla \psi(x_{t+1})}{x_t-x_{t+1}} - \siprod{\nabla \psi(x_t)}{x_t-x_{t+1}} \\
+\end{equation*}
+Hence :
+\begin{align*}
+	\siprod{\eta_tg_t}{x_t - x_{t+1}} &\geq \siprod{\nabla \psi(x_{t+1})}{x_{t+1}-x_t} + \siprod{\nabla \psi(x_t)}{x_t -x_{t+1}} \\
+	&= B_{\psi}(x_t ; x_{t+1}) - \psi(x_t) + \psi(x_{t+1}) + B_{\psi}(x_{t+1} ;x_t) - \psi(x_{t+1}) + \psi(x_t) \\
+	&= B_{\psi}(x_{t+1} ; x_t) + B_{\psi}(x_t ; x_{t+1})
+\end{align*}
+Rearranging, we get the claimed result.
 \end{solution}
