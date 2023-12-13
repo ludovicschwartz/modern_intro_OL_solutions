@@ -1,6 +1,39 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Find the exact expression of the conjugate function of $ f(x) = \alpha \exp{(\beta x^2)} $, for $ \alpha, \beta >0 $. Hint: Wolfram Alpha or any other kind of symbolic solver can be very useful for this type of problems.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We define $ g(x) = \exp{(x^2)} $, we'll start by computing the conjugate of g and then will deduce the conjugate of f. We have for any $ y \in \mathbb{R} $:
+\begin{equation*}
+	g^{*}(y) = \sup_{x\in \mathbb{R}} xy - g(x)
+\end{equation*}
+Since g is strongly convex this supremum is a maximum and is attained at the only point $ x_y $ which verifies $ g^{\prime}(x_y) = y $. Now $ g^{\prime}(x) = 2x \exp{(x^2)} $ so we need to solve the following equation :
+\begin{equation*}
+	2x_y\exp{(x_y^2)} = y
+\end{equation*}
+Now we will use the Lambert W function. This function is defined as the inverse of the function $ x \rightarrow x \exp{(x)} $ on the interval $ \mathbb{R}^+ $, that is to say for any $ z\geq 0 $, we have $ W(z \exp{(z)}) = z $.
+Now $ x_y $ satisfies the following equations :
+\begin{align*}
+	2x_y \exp{(x_y^2)} &= y \\
+	4x_y^2 \exp{(2x_y^2)} &= y^2 \\
+	2 x_y^2 \exp{(2x_y^2)} &= \frac{y^2}{2} \\
+	W(2 x_y^2 \exp{(2x_y^2)}) &= W(\frac{y^2}{2}) \\
+	2 x_y^2 &= W(\frac{y^2}{2}) \\
+	x_y &= sgn(y)\cdot \sqrt{\frac{W(\frac{y^2}{2})}{2}}
+\end{align*}
+Plugging it back in, we get :
+\begin{equation*}
+	g^{*}(y) = x_y y - g(x_y) = |y|\cdot \left( \sqrt{\frac{W(\frac{y^2}{2})}{2}} - \frac{1}{\sqrt{2W(\frac{y^2}{2})}}  \right)
+\end{equation*}
+Where we used $ \exp{(x_y^2)} = \frac{y}{2x_y} $
+Finally, going back to f, we have :
+\begin{align*}
+	f^{*}(y) &= \sup_{x\in \mathbb{R}}yx - \alpha g(\sqrt{\beta}x) \\
+		 &= \alpha\sup_{x \in \mathbb{R}} \frac{y}{\alpha}x - g(\sqrt{\beta}x) \\
+		 &= \alpha \sup_{x \in \mathbb{R}} \frac{y}{\alpha}\cdot \frac{x}{\sqrt{\beta}} - g(x)\\
+		 &= \alpha g^{*}(\frac{y}{\alpha \sqrt{\beta}}) \\
+		 &= \frac{|y|}{\sqrt{\beta}}\cdot \left( \sqrt{\frac{W(\frac{y^2}{2 \alpha^2 \beta})}{2}} - \frac{1}{\sqrt{2W(\frac{y^2}{2 \alpha^2 \beta})}} \right)
+\end{align*}
+
 \end{solution}
