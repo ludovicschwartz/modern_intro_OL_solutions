@@ -1,6 +1,18 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Prove the three-points equality for Bregman divergences in Lemma 6.6 :
+\begin{equation*}
+	\forall x,y \in \text{int} X, z \in X, \, B_{\psi}(z ; x) + B_{\psi}(x ; y) - B_{\psi}(z ; y) = \siprod{\nabla \psi(y)-\nabla \psi(x)}{z-x}
+\end{equation*}
+
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+\begin{align*}
+	&B_{\psi}(z ; x) + B_{\psi}(x ;y) - B_{\psi}(z ;y) \\
+	=& \psi(z)-\psi(x) - \siprod{\nabla \psi(x)}{z-x} + \psi(x) - \psi(y) - \siprod{\nabla  \psi(y)}{x-y} -\psi(z) + \psi(y) + \siprod{\nabla \psi(y)}{z-y} \\
+	=& -\siprod{\nabla \psi(x)}{z-x} + \siprod{\nabla \psi(y)}{y-x + z-y} \\
+	=& \siprod{\nabla \psi(y) - \nabla \psi(x)}{z-x}
+\end{align*}
+
 \end{solution}
