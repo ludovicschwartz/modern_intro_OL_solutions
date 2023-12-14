@@ -1,6 +1,41 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Find the conjugate function of $ \psi(x) = \sum_{i=1}^{d}x_i \log x_i $ defined over $ X = \{ x\in \mathbb{R}^d : x_i \geq 0, \norm{x}_1 =1 \} $.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We have :
+\begin{equation*}
+	\forall y \in \mathbb{R}^d,\,\psi^{*}(y) = \sup_{x\in X} \siprod{y}{x}-\psi(x)
+\end{equation*}
+Let's fix a $ y\in \mathbb{R}^d $, we define $ F_y(x) = \siprod{y}{x} - \psi(x) $ we notice that the constraint $ \norm{x}_1 = 1 $ can be rewritten as $ \siprod{x}{1} = 1 $ ,and we introduce the following lagrangian :
+\begin{equation*}
+	\mathcal{L}(x,\lambda) = F_y(x) + \lambda(1-\siprod{1}{x})
+\end{equation*}
+
+We find the solutions of $ \nabla \mathcal{L} = 0 $. We have :
+\begin{equation*}
+	\frac{\partial \mathcal{L}}{\partial x_i} = y_i - \log x_i -1 - \lambda 
+\end{equation*}
+Hence, the $ x^{*} $ solution to $ \nabla \mathcal{L}(x^{*},\lambda^{*})=0$ is exactly $ x_i^{*} = \frac{\exp{(y_i)}}{\sum_{i=1}^{d}\exp{(y_i)}} $. Now we will verify that this $ x^{*} $ maximizes $ F_y $ on X. Since $ F_y $ is concave, we only need to verify that for any $ x\in X $, we have $ \siprod{\nabla F_y(x^{*})}{x-x^{*}} \leq 0 $. We have :
+\begin{align*}
+	\siprod{\nabla F_y(x^{*})}{x-x^{*}} &= \sum_{i=1}^{d}(y_i-\log(x_i))\cdot (x_i-x^{*}_i) \\
+					    &= \sum_{i=1}^{d}(y_i -\log(\exp{(y_i)})+\log(\sum_{k=1}^{d}\exp{(y_k)}))\cdot (x_i-x^{*}_i) \\
+					    &= \sum_{i=1}^{d}\log(\sum_{k=1}^{d}\exp{(y_k)})\cdot (x_i-x^{*}_i) \\
+					    &= \log(\sum_{k=1}^{d}\exp{(y_k)})\cdot (\sum_{i=1}^{d}x_i - \sum_{i=1}^{d}x^{*}_i) \\
+					    &=\log(\sum_{k=1}^{d}\exp{(y_k)})\cdot (1-1) \\
+					    &= 0
+\end{align*}
+Finally we only need to plug in the value of $ x^{*} $ to get the final result :
+\begin{align*}
+	\psi^{*}(y) &= F_y(x^{*}) \\
+		    &= \sum_{i=1}^{d} y_i x^{*}_i -x^{*}_i \log x^{*}_i \\
+		    &= \sum_{i=1}^{d} y_i x_i^{*} -x^{*}_i \left( y_i - \log(\sum_{k=1}^{d}\exp{(y_k)})) \right) \\
+		    &= \log \left( \sum_{k=1}^{d}\exp{(y_k)} \right) \cdot \sum_{i=1}^{d}x^{*}_i \\
+		    &= \log \left( \sum_{k=1}^{d}\exp{(y_k)} \right)
+\end{align*}
+
+
+
+
 \end{solution}
