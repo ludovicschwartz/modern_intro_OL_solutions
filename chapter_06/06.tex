@@ -1,6 +1,26 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	We saw the Fenchel-Young inequality : $ \siprod{\theta}{x} \leq f(x) + f^{*}(\theta) $. Now we want to show an equality, quantifying the gap in the inequality with a Bregman divergence term. Assume that $ f $ and $ f^{*} $ are differentiable, f is strictly convex, and $ \text{dom}f = \mathbb{R}^d $. Prove that :
+\begin{equation*}
+	f(x) + f(\theta^{*}) = \siprod{\theta}{x} + B_f(x ; \nabla f^{*}(\theta)) .
+\end{equation*}
+
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	Let $ x \in \mathbb{R}^d, \theta \in \text{dom}(\nabla f^{*}) $. We define $ x^{*} = \nabla f^{*}(\theta) $. We know that f is closed because it is continuous and its domain is closed. We can apply theorem 5.7 and since $ x^{*} \in \partial f^{*}(\theta) $, we have two results :
+\begin{itemize}
+	\item First, we know that $ (x^{*}, \theta) $ will satisfy the equality case of the Fenchel-Young Inequality : $ f(x^{*}) + f^{*}(\theta) = \siprod{\theta}{x^{*}} $
+	\item Secondly, we also know that $ \theta \in \partial f(x^{*}) $, which is to say $ \theta = \nabla f(x^{*}) $
+\end{itemize}
+Then we have :
+\begin{align*}
+	f(x) + f(\theta) &= f(x^{*}) + f(\theta) + f(x) - f(x^{*}) \\
+			 &= \siprod{\theta}{x^{*}} + f(x) - f(x^{*}) \\
+			 &= \siprod{\theta}{x} - \siprod{\theta}{x-x^{*}} + f(x)-f(x^{*}) \\
+			 &= \siprod{\theta}{x} + f(x) - f(x^{*}) -\siprod{\nabla f(x^{*})}{x-x^{*}} \\
+			 &= \siprod{\theta}{x} + B_f(x ; x^{*}) \\
+			 &= \siprod{\theta}{x} + B_f(x ; \nabla f^{*}(\theta))
+\end{align*}
+
 \end{solution}
