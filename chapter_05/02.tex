@@ -1,6 +1,17 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Extend the proof of Theorem 5.1 to an arbitrary norm $ \norm{\cdot } $ to measure the diameter of V and with $ \norm{g_t}_{*} \leq  L $.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	Let D = $ \sup_{x,y\in V} \norm{x-y} $ be the diameter of V. By compacity, we can find $ v,w \in V$, such that $ \norm{v-w} = D $. In order to make the proof go through when $ \norm{\cdot } $ is not the euclidean norm, it is enough to find a $ z $ such that $ \siprod{z}{v-w} =D $ and such that $ \norm{Lz}_{*} \leq L $.
+
+By the relationship between a norm and its dual, we have that :
+\begin{align*}
+	D &=\norm{v-w}\\
+	  &= \sup_{x\in \mathbb{R}^d, \norm{x}_{*}=1}\siprod{x}{v-w}\\
+	  &= \max_{x\in \mathbb{R}^d, \norm{x}_{*}=1}\siprod{x}{v-w}
+\end{align*}
+Where the sup is reached by compacity of the unit ball of the dual norm. Hence we can find a $ z \in \mathbb{R}^d $ such that $ \norm{z}_{*} \leq 1 $ and $ \siprod{z}{v-w} = D $. Then the rest of the proof of Theorem 5.1 is exactly the same.
+
 \end{solution}
