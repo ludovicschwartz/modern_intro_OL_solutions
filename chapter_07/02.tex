@@ -1,6 +1,22 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Consider FTRL with losses $ \ell_t(x) $ and regularizers $ \psi_t(x) $. Assume that $ \psi_{t+1} \geq \psi_t $ for $ t=1, \ldots T-1 $.\\
+	Denote by $ F_t(x) := \psi_t(x) + \sum_{i=1}^{t-1}\ell_i(x) $ and show that
+\begin{equation*}
+	F_t(x_t) - F_{t+1}(x_{t+1}) + \ell_t(x_t) \leq  \ell_t(x_t) - \ell_t(x_{t+1})
+\end{equation*}
+
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+We have for any x 
+\begin{equation*}
+	F_{t+1}(x) = F_t(x) + \ell_t(x) + \psi_{t+1}(x) - \psi_t(x) \geq F_t(x) + \ell_t(x)
+\end{equation*}
+Hence :
+\begin{align*}
+	F_t(x_t) - F_{t+1}(x_{t+1}) +\ell_t(x_t) &\leq F_t(x_t) - F_t(x_{t+1}) -\ell_t(x_{t+1}) + \ell_t(x_t) \\
+						 &\leq \ell_t(x_t) - \ell_t(x_{t+1})
+\end{align*}
+Where we used $ x_t \in \argmin_x F_t(x) $ for the last inequality.
 \end{solution}
