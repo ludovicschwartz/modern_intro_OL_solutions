@@ -1,6 +1,27 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Let $ V=\{ x\in \mathbb{R}^d : \norm{x}_2 \leq U \} $. Prove that $ \ell(x) = \log(1+\exp{(-\siprod{z}{x})}) $ is $ \exp{(-2U)}/2$-exp-concave where $ \norm{z}_2 \leq 1 $.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	Let $ \alpha = \frac{\exp{(-2U)}}{2}$. The composition of a concave function and a linear function is concave. Hence, it is enough to prove that the function 
+\begin{align*}
+f : \mathbb{R}& \longrightarrow \mathbb{R} \\
+t&\longmapsto \log(1+exp(t))
+\end{align*}
+is $ \alpha $-exp-concave on $ \{-\siprod{z}{x}, x\in V\} \subset [-U,U] $ to conclude.
+We introduce the function $ g(t) = \exp{\left(-\alpha f(t) \right)} = (1+\exp{(t)})^{-\alpha} $. We will study the concavity of f. We compute :
+\begin{equation*}
+	g^{\prime}(t) = -\exp{(t)}\cdot \alpha \cdot (1+\exp{(t)})^{-(\alpha+1)}
+\end{equation*}
+And
+\begin{align*}
+	g^{\prime\prime}(t) &= \alpha \exp{(t)}\left( (\alpha+1)\exp{(t)}\cdot (1+\exp{(t)})^{-(\alpha+2)} - (1+\exp{(t)})^{-(\alpha+1)} \right) \\
+			    &= \alpha \exp{(t)}(1+\exp{(t)})^{-(\alpha+2)}\cdot \left( (\alpha+1)\exp{(t)} - (1+\exp{(t)}) \right) \\
+			    &= \alpha \exp{(t)}(1+\exp{(t)})^{-(\alpha+2)}\cdot \left(\alpha \exp{(t)} -1\right)
+\end{align*}
+This is negative on $ [-U,U] $ as long as $ \alpha \leq \exp{(-U)} $.
+Hence $ \ell $ is $ \exp{(-U)} $-exp-concave on V.
+
+
 \end{solution}
