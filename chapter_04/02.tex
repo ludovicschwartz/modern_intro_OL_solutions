@@ -1,6 +1,25 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Prove that $ \ell_t(x) = \norm{x-z_t}_2^2 $ is 2-strongly convex w.r.t $ \norm{\cdot }_2 $ and derive the OSD update for it and its regret guarantee.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We have $ \nabla \ell_t(x) = 2(x-z_t) $, hence for any $ x,y\in \mathbb{R}^d $, we have :
+\begin{align*}
+	\ell_t(x) - \ell_t(y) - \siprod{\nabla \ell_t(y)}{x-y} &= \norm{x-z_t}_2^2 - \norm{y-z_t}_2^2 - 2\siprod{y-z_t}{x-y} \\
+							       &= \siprod{x-z_t + y-z_t}{x-z_t-(y-z_t)} - 2\siprod{y-z_t}{x-y} \\
+							       &= \siprod{x+y}{x-y} - 2 \siprod{z_t}{x-y} +2 \siprod{z_t}{x-y} - 2 \siprod{y}{x-y} \\
+							       &= \siprod{x+y - 2y}{x-y} \\
+							       &= 2\left( \frac{\norm{x-y}_2^2}{2} \right)
+\end{align*}
+Hence $ \ell_t $ is 2-strongly convex(And also 2-smooth). Now we can directly apply theorem 4.7 with $ \mu_t = 2 $, $ \eta_t = \frac{1}{\sum_{i=1}^{t} \mu_i} = \frac{1}{2t} $. The regret guarantee of OSD with stepsize $ \eta_t $ on a non-empty closed convec set $ V\subset \mathbb{R}^d $ is then that for any $ u\in V $
+\begin{equation*}
+	\sum_{t=1}^{T}\ell_t(x_t) - \sum_{t=1}^{T}\ell_t(u) \leq \frac{1}{2} \sum_{t=1}^{T}\frac{\norm{g_t}_2^2}{2t}
+\end{equation*}
+In particular if V is bounded, then all the losses become L-Lipschitz with$ L= 2\sup_{x,y\in V}\norm{x-y}_2 $, and we get the following bound from Corollary 4.9 :
+\begin{equation*}
+	\sum_{t=1}^{T}\ell_t(x_t) - \sum_{t=1}^{T}\ell(u) \leq \frac{L^2}{4}(1+\log T)
+\end{equation*}
+
+
 \end{solution}
