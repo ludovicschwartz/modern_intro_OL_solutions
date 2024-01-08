@@ -1,6 +1,34 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Prove that the update of FTRL with linearized loss in Example 7.10 is correct.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We consider $ V = \{ x \in \mathbb{R}^d : \norm{x}_2 \leq 1 \} $ and $ \psi_t(x) = \frac{\sqrt{t}}{2}\norm{x}_2^2 + i_V(x) $. We want to prove that the updates takes the form :
+\begin{align*}
+	\tilde{x}_{t+1} &= \frac{-\sum_{i=1}^{t}g_i}{\sqrt{t}}, \\
+	x_{t+1} &= \tilde{x}_{t+1} \min \left( \frac{1}{\norm{\tilde{x}_{t+1}}_2},1 \right)
+\end{align*}
+We have by definition that
+\begin{equation*}
+	x_{t+1} \in \argmin_{x\in \mathbb{R^d}} \psi_{t+1}(x) + \sum_{i=1}^{t}\siprod{g_i}{x} = \argmin_{x\in V} \underbrace{\frac{\sqrt{t}}{2}\norm{x}_2^2 + \sum_{i=1}^{t}\siprod{g_i}{x}}_{F_t(x)}
+\end{equation*}
+Since $ F_t $ is proper, closed, strictly convex and differentiable on $ \mathbb{R}^d $, we know by theorem 6.13, that if we define $ \tilde{x}_{t+1} = \argmin_{x\in \mathbb{R^d}}F_t(x) $, we have :
+\begin{equation*}
+	x_{t+1} = \argmin_{z\in V} B_{F_t}(z ; \tilde{x}_{t+1})
+\end{equation*}
+Where $ B_{F_t} $ is the Bregman divergence associated to $ F_t $. Since $ F_t $ is the L2 norm scaled and linear shifted, minimizing the Bregman divergence is exactly doing an orthogonal projection on V so we already have :
+\begin{equation*}
+	x_{t+1} = \tilde{x}_{t+1} \min \left( \frac{1}{\norm{\tilde{x}_{t+1}}_2},1 \right)
+\end{equation*}
+Now, using that $ F_t $ is convex and differentiable, we can explicitely solve $ \nabla F_t(x) = 0 $ to get the value of $ \tilde{x}_{t+1} $. We have :
+\begin{align*}
+	&\nabla F_t(x) = 0 \\
+	\iff  & \sqrt{t} x + \sum_{i=1}^{t}g_i = 0 \\
+	\iff & x = \frac{-\sum_{i=1}^{t}g_i}{\sqrt{t}}
+\end{align*}
+Hence 
+\begin{equation*}
+	\tilde{x}_{t+1} = \frac{-\sum_{i=1}^{t}g_i}{\sqrt{t}}
+\end{equation*}
 \end{solution}
