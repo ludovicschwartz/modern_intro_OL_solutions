@@ -1,6 +1,20 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Design and analyze the FTRL version of OMD with p-norms in Section 6.7
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	As in section 6.7, we consider the function $ \psi(x) = \frac{1}{2} \norm{x}_p^2 $ and $ X = V = \mathbb{R}^d $. For FTRL, we define the function $ \psi_t(x) = \frac{\psi(x)}{\eta_{t-1}} $. Since the function $ \psi $ is Legendre on $ \mathbb{R}^d $, if we pick a constant learning rate, then FTRL is exactly equivalent to mirror descent. We do a analysis in the general case.
+In mirror descent the key component to get the regret bound was to use the strong convexity of the losses and Lemma 6.7 to get the following bound :
+\begin{equation*}
+	\sum_{t=1}^{T}(\ell_t(x_t)-\ell_t(u)) \leq \frac{\norm{u}_p^2}{2 \eta} + \frac{\eta}{2(p-1)}\sum_{t=1}^{T}\norm{g_t}_q^2
+\end{equation*}
+Here for FTRL, we can also use the strong convexity of the losses and corollary 7.9 to get 
+\begin{align*}
+	\sum_{t=1}^{T}(\ell_t(x_t)-\ell_t(u)) &\leq \frac{\psi(u)}{\eta_{T-1}} + \frac{1}{2(p-1)}\sum_{t=1}^{T} \eta_{t-1}\norm{g_t}_q^2 \\
+					      &\leq \frac{\norm{u}_p^2}{2\eta_{T-1}} + \frac{1}{2(p-1)}\sum_{t=1}^{T} \eta_{t-1}\norm{g_t}_q^2
+\end{align*}
+From there the analysis is identical to the mirror descent analysis.
+
+
 \end{solution}
