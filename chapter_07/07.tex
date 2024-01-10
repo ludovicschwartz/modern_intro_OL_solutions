@@ -1,6 +1,18 @@
 %! TEX root = ./main.tex
-\begin{exercise}[TODO]{}
+\begin{exercise}[]{}
+	Prove that the losses $ \ell_t(x) = \frac{1}{2}(\siprod{z_t}{x}-y_t)^2 $, where $ \norm{z_t}_2\leq 1 $, $ |y_t|\leq 1 $, and $ V=\{ x\in \mathbb{R}^d : \norm{x}_2 \leq 1 \}, $ are exp-concave and find the exp-concavity constant.
 \end{exercise}
 
-\begin{solution}[TODO]
+\begin{solution}[]
+	We define for any $ y \in [-1,1] $,
+\begin{align*}
+f:[-1,1]& \longrightarrow \mathbb{R} \\
+t&\longmapsto \frac{1}{2}(t-y)^2
+\end{align*}
+Since the composition of a concave function and a linear function is concave, it is enough to study the exp-concavity of f on $ [-\norm{z_t}_2, \norm{z_t}_2] $. Let $ \alpha >0 $, we introduce $ g(t) = \exp{-\alpha f(t)} = \exp{-\frac{\alpha}{2}(t-y)^2} $. Then, we compute 
+\begin{align*}
+	g^{\prime}(t) &= -\alpha(t-y) \exp{-\frac{\alpha}{2}(t-y)^2} \\
+	g^{\prime\prime}(t) &= \alpha\exp{-\frac{\alpha}{2}(t-y)^2}(\alpha(t-y)^2-1)
+\end{align*}
+We can see that $ g^{\prime\prime} $ is non-positive on $ [-\norm{z_t}_2,\norm{z_t}_2] $ as long as $ \alpha \leq \frac{1}{(\norm{z_t}_2+|y|)^2} $, hence $ \ell_t $ is always $ \frac{1}{4} $ exp-concave(More precisely $ \frac{1}{(\norm{z_t}+|y_t|)^2} $ exp-concave).
 \end{solution}
