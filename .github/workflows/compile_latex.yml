@@ -1,0 +1,39 @@
+name: Compile LaTeX
+
+on:
+  push:
+    branches:
+      - main  # Replace with the branch you want to monitor
+jobs:
+  build:
+    permissions:
+      contents: write  # Allow write access to the repository
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up LaTeX environment
+      run: sudo apt-get update && sudo apt-get install -y texlive-full
+
+    - name: Compile LaTeX file
+      run: |
+        mkdir -p output
+        pdflatex -interaction=nonstopmode -halt-on-error -output-directory=output main.tex
+        pdflatex -interaction=nonstopmode -halt-on-error -output-directory=output main.tex
+
+    - name: Deploy to GitHub Pages
+      run: |
+        mkdir -p gh-pages
+        mv output/main.pdf gh-pages/
+        cd gh-pages
+        git init
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Deploy PDF"
+        git branch -M main
+        git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git push --force origin main:gh-pages
